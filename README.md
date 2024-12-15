@@ -1,4 +1,4 @@
-[![Build application](https://github.com/learning-process/programming_course_reports/actions/workflows/main.yml/badge.svg)](https://github.com/learning-process/programming_course_reports/actions/workflows/main.yml)
+[![Build application](https://github.com/learning-process/ppc-2024-mpi-reports/actions/workflows/main.yml/badge.svg)](https://github.com/learning-process/ppc-2024-mpi-reports/actions/workflows/main.yml)
 
 # Programming Course Reports
 
