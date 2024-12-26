@@ -1,147 +1,146 @@
-\documentclass{report}
-
-\usepackage[T2A]{fontenc}
+\documentclass[a4paper,12pt]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[english, russian]{babel}
-\usepackage[pdftex]{hyperref}
-\usepackage[14pt]{extsizes}
-\usepackage{listings}
-\usepackage{color}
-\usepackage{geometry}
-\usepackage{enumitem}
+\usepackage[russian]{babel}
 \usepackage{amsmath}
-\setlength{\parindent}{15pt}
-\geometry{a4paper,top=2cm,bottom=3cm,left=2cm,right=1.5cm}
-\setlength{\parskip}{0.5cm}
-\setlist{nolistsep, itemsep=0.3cm,parsep=0pt}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{tocloft}
+\usepackage{xcolor} 
+\usepackage{float}
 
-\usepackage{xcolor}
+\geometry{top=20mm, bottom=20mm, left=25mm, right=25mm}
+
 \lstset{
-	language=C++, 
-	basicstyle=\ttfamily\small, 
-	keywordstyle=\color{blue}\bfseries, 
-	stringstyle=\color{orange}, 
-	commentstyle=\color{green!50!black}\itshape, 
-	morecomment=[l][\color{purple}]{\#}, 
-	tabsize=2, 
-	breaklines=true, 
-	breakatwhitespace=false, 
-	breakindent=0pt,
-	frame=single, 
-	title=\lstname,
-	showstringspaces=false, 
+  language=C++,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\itshape\color{green!50!black},
+  stringstyle=\color{red!60!black},
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=8pt,
+  backgroundcolor=\color{gray!10},
+  showspaces=false,
+  showstringspaces=false,
+  breaklines=true,
+  frame=single,
+  tabsize=2,
+  captionpos=b
 }
 
 \begin{document}
 
+% Титульный лист
 \begin{titlepage}
+    \centering
+    \large
+    Министерство науки и высшего образования Российской Федерации\\[0.5cm]
+    Федеральное государственное автономное образовательное учреждение высшего образования\\[0.5cm]
+    \textbf{«Национальный исследовательский Нижегородский государственный университет им. Н.И. Лобачевского»}\\
+    (ННГУ)\\[1cm]
+    Институт информационных технологий, математики и механики\\[0.5cm]
+    Направление подготовки: \textbf{«Программная инженерия»}\\[2cm]
 
-\begin{center}
-Министерство науки и высшего образования Российской Федерации
-\end{center}
+    \vfill % Вертикальное заполнение для центрирования текста
+    {\LARGE \textbf{ОТЧЕТ}}\\[0.5cm]
+    {\Large по задаче}\\[0.5cm]
+    {\LARGE \textbf{«Алгоритм Штрассена. Умножение плотных матриц.»}}\\[0.5cm]
+    {\Large \textbf{Вариант №3}}\\[2.5cm]
 
-\begin{center}
-Федеральное государственное автономное образовательное учреждение высшего образования \\
-Национальный исследовательский Нижегородский государственный университет им. Н.И. Лобачевского
-\end{center}
+    \hfill\parbox{0.5\textwidth}{
+        \textbf{Выполнил:} \\
+        студент группы 3822Б1ПР3 \\
+        \textbf{Наседкин Егор}
+    }\\[0.5cm]
 
-\begin{center}
-Институт информационных технологий, математики и механики
-\end{center}
+    \hfill\parbox{0.5\textwidth}{
+        \textbf{Преподаватели:} \\
+        Нестеров А.Ю.\\
+        Оболенский А.А.
 
-\vspace{4em}
+    }\\[2cm]
 
-\begin{center}
-\textbf{\Large Отчет по лабораторной работе} \\
-\end{center}
-\begin{center}
-\textbf{\Large \«Реализация параллельного алгоритма Штрассена для умножения матриц\»} \\
-\end{center}
-
-\vspace{4em}
-
-\newbox{\lbox}
-\savebox{\lbox}{\hbox{text}}
-\newlength{\maxl}
-\setlength{\maxl}{\wd\lbox}
-\hfill\parbox{7cm}{
-\hspace*{5cm}\hspace*{-5cm}\textbf{Выполнил:} \\
-студент группы 3822Б1ПР3 \\
-Наседкин Е.Д.\\
-\\
-\hspace*{5cm}\hspace*{-5cm}\textbf{Преподаватели:} \\
-Нестеров А.Ю.\\
-Оболенский А.А.\\}
-\vspace{\fill}
-
-\begin{center} Нижний Новгород \\ 2024 \end{center}
-
+    Нижний Новгород\\
+    2024
 \end{titlepage}
 
-\setcounter{page}{2}
-
 \tableofcontents
-
 \newpage
 
-\section*{Введение} \addcontentsline{toc}{section}{Введение}  
-Алгоритм Штрассена \u2014 это метод умножения матриц, который уменьшает вычислительную сложность по сравнению с классическим методом. Его применение особенно эффективно для больших матриц благодаря рекурсивному разбиению задач на подзадачи меньшего размера.
+\section{Введение}
+
+\hspace*{1.25em}Алгоритм Штрассена это метод умножения матриц, который уменьшает вычислительную сложность по сравнению с классическим методом. Его применение особенно эффективно для больших матриц благодаря рекурсивному разбиению задач на подзадачи меньшего размера.
 
 В данной работе реализован параллельный алгоритм Штрассена с использованием библиотеки MPI. Этот подход позволяет использовать преимущества многопроцессорных систем для ускорения вычислений.
 
-\newpage
+\section{Постановка задачи}
 
-\section*{Постановка задачи} \addcontentsline{toc}{section}{Постановка задачи}
-Целью работы является разработка параллельной версии алгоритма Штрассена для умножения квадратных матриц.
+\hspace*{1.25em}Целью работы является разработка параллельной версии алгоритма Штрассена для умножения квадратных матриц.
 
 Задачи:
 \begin{itemize}
-\item Реализовать последовательную и параллельную версии алгоритма Штрассена.
-\item Провести тестирование корректности алгоритма.
+    \item Реализация последовательной версии метода Штрассена.
+    \item Реализация параллельной версии для ускорения выполнения алгоритма на больших наборах данных.
+    \item Проведение тестирования корректности алгоритма.
+    \item Анализ эффективности последовательного и параллельного выполнения на наборах данных разного уровня сложности.
 \end{itemize}
 
-\newpage
+Цель исследования заключается в доказательстве преимуществ параллельного метода при решении задач глобальной оптимизации.
 
-\section*{Описание алгоритма Штрассена} \addcontentsline{toc}{section}{Описание алгоритма Штрассена}
-Алгоритм Штрассена основывается на разбиении исходных матриц на блоки и выполнении вычислений через промежуточные матрицы. Это позволяет сократить количество операций умножения с 8 до 7 на каждом уровне рекурсии.
+\section{Описание алгоритма}
 
-\subsection*{Основные этапы алгоритма}
+\hspace*{1.25em}Алгоритм Штрассена основывается на разбиении исходных матриц на блоки и выполнении вычислений через промежуточные матрицы.
+
 \begin{enumerate}
-\item Разбиение исходных матриц на блоки.
-\item Вычисление промежуточных матриц $M_1, \dots, M_7$.
-\item Объединение результатов для формирования итоговой матрицы.
+    \item \textbf{Основные этапы алгоритма}:
+    \begin{itemize}
+        \item Разбиение исходных матриц на блоки
+        \item Вычисление промежуточных матриц $M_1, \dots, M_7$.
+        \item Объединение результатов для формирования итоговой матрицы.
+    \end{itemize}
 \end{enumerate}
-
 Параллельная версия алгоритма разделяет вычисления между процессами с использованием MPI, что позволяет выполнять отдельные этапы независимо.
 
-\newpage
+\section{Описание схемы распараллеливания}
 
-\section*{Заключение} \addcontentsline{toc}{section}{Заключение}
-В результате работы:
-\begin{itemize}
-\item Реализованы последовательная и параллельная версии алгоритма Штрассена.
-\item Проведено тестирование корректности алгоритма.
-\item Достигнуто значительное ускорение на больших матрицах при использовании параллельной версии.
-\end{itemize}
+Схема распараллеливания алгоритма Штрассена для умножения матриц включает следующие этапы:
 
-Данная работа демонстрирует эффективность использования MPI для реализации алгоритмов линейной алгебры и открывает возможности для их применения в задачах высокопроизводительных вычислений.
+\begin{enumerate}
+\item Предобработка данных: Процесс с рангом 0 инициализирует входные матрицы A и B, а также определяет их размерность n. Затем данные распределяются между всеми процессами.
 
-\newpage
+\item Разделение матриц: Матрицы A и B делятся на подматрицы размером n/2 x n/2. Эти подматрицы распределяются между процессами для дальнейших вычислений.
 
-\begin{thebibliography}{1}
-\addcontentsline{toc}{section}{Литература}
-\bibitem{strassen_original} Strassen algorithm. Wikipedia. URL: \url{https://en.wikipedia.org/wiki/Strassen_algorithm}.
-\bibitem{mpi_documentation} Open MPI Documentation. URL: \url{https://www.open-mpi.org/doc/}.
-\bibitem{boost_mpi} Boost.MPI Documentation. URL: \url{https://www.boost.org/doc/libs/release/doc/html/mpi.html}.
-\end{thebibliography}
+\item Вычисление промежуточных матриц Mi: Каждый процесс вычисляет одну или несколько промежуточных матриц Mi по формулам алгоритма Штрассена. Для этого используются операции сложения и вычитания подматриц, а также рекурсивное применение алгоритма Штрассена для умножения подматриц.
 
-\newpage
+\item Сбор результатов: Процесс с рангом 0 собирает вычисленные промежуточные матрицы Mi от всех процессов. На основе этих матриц вычисляются итоговые подматрицы C11, C12, C21 и C22 результирующей матрицы C.
 
-\section*{Приложения}
+\item Формирование результирующей матрицы: Подматрицы C11, C12, C21 и C22 объединяются в итоговую матрицу C. Если матрицы были дополнены нулями на этапе предобработки, лишние строки и столбцы удаляются.
+
+\item Завершение работы: Процессы завершают вычисления, а процесс с рангом 0 записывает результат умножения матриц в выходные данные.
+\end{enumerate}
+
+Таким образом, схема распараллеливания алгоритма Штрассена позволяет эффективно использовать вычислительные ресурсы для умножения больших матриц.
+
+\section{Заключение}
+
+В ходе выполнения работы была реализована параллельная версия алгоритма Штрассена для умножения квадратных матриц с использованием библиотеки MPI. Последовательная версия алгоритма была разработана и протестирована на корректность. Параллельная реализация позволила распределить вычисления между процессами, что особенно полезно при работе с большими объемами данных. Тестирование проводилось на наборах данных различного размера, что подтвердило работоспособность и корректность алгоритма.
+\section{Литература}
+\begin{enumerate}
+    \item \href{https://en.wikipedia.org/wiki/Strassen_algorithm}{Strassen algorithm. Wikipedia.}.
+    \item \href{https://www.youtube.com/watch?v=OSelhO6Qnlc&ab_channel=Insidecode}{YouTube. Strassen algorithm for matrix multiplication (divide and conquer) - Inside code}.
+    \item \href{https://www.open-mpi.org/doc/}{Open MPI Documentation.}.
+    \item \href{https://www.boost.org/doc/libs/release/doc/html/mpi.html}{Boost.MPI Documentation}.
+\end{enumerate}
+
+\section{Приложения}
 \addcontentsline{toc}{section}{Приложения}
-
-\subsection*{Функция StrassenAlgorithmSEQ::strassen\_multiply\_seq}
-\begin{lstlisting}
+\subsection*{Функция StrassenAlgorithmSEQ::strassen\_multiply\_seq()}
+\begin{lstlisting}[language=C++]
 std::vector<double> StrassenAlgorithmSEQ::strassen_multiply_seq(const std::vector<double>& matrixA,
                                                 const std::vector<double>& matrixB, size_t size) {
   if (matrixA.empty() || matrixB.empty() || size == 0) {
@@ -226,11 +225,10 @@ std::vector<double> StrassenAlgorithmSEQ::strassen_multiply_seq(const std::vecto
   return {};
 }
 \end{lstlisting}
-
-\subsection*{Функция StrassenAlgorithmMPI::strassen\_multiply}
-\begin{lstlisting}
-    std::vector<double> StrassenAlgorithmMPI::strassen_multiply(const std::vector<double>& matrixA,
-                                                                const std::vector<double>& matrixB, size_t size) {
+\subsection*{Функция StrassenAlgorithmMPI::strassen\_multiply()}
+\begin{lstlisting}[language=C++]
+std::vector<double> StrassenAlgorithmMPI::strassen_multiply(const std::vector<double>& matrixA,
+                                const std::vector<double>& matrixB, size_t size) {
       boost::mpi::environment env;
       boost::mpi::communicator world;
 
@@ -352,5 +350,4 @@ std::vector<double> StrassenAlgorithmSEQ::strassen_multiply_seq(const std::vecto
         return {};
     }
 \end{lstlisting}
-
 \end{document}
